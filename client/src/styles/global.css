@@ -1,0 +1,102 @@
+:root {
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  color: #233c44;
+  background: #f4f7f8;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 400;
+  font-size: 16px;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  font: inherit;
+  cursor: pointer;
+}
+button:disabled {
+  cursor: wait;
+  opacity: 0.5;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #188c9b;
+  outline-offset: 4px;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button svg {
+  flex-shrink: 0;
+}
+button {
+  color: inherit;
+}
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+.boot-loading,
+.fatal-error {
+  padding: 3rem;
+}
+.maplibregl-canvas:focus-visible {
+  outline: 3px solid #188c9b;
+  outline-offset: -3px;
+}
+.maplibregl-ctrl-bottom-left {
+  bottom: 8px;
+  left: 16px;
+}
+.maplibregl-ctrl-scale {
+  border-color: #586d70;
+  color: #456066;
+  background: #ffffffb0;
+  border-radius: 2px;
+  font-family: inherit;
+}
+.maplibregl-ctrl-attrib {
+  font-size: 10px;
+  background: #ffffffe0;
+}
+.city-marker {
+  border: 1px solid #fff;
+  background: #ffffffed;
+  color: #2a535c;
+  padding: 7px 11px;
+  border-radius: 8px;
+  box-shadow: 0 3px 15px #25444b20;
+  font-size: 0.69rem;
+  font-weight: 600;
+  min-height: 44px;
+  white-space: nowrap;
+}
+.city-marker::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #298595;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+.city-marker:hover {
+  background: #e6f5f6;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms;
+    transition-duration: 0.01ms;
+    scroll-behavior: auto;
+  }
+}
