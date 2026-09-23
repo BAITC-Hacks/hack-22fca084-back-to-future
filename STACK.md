@@ -21,3 +21,10 @@
 - `docker compose run --rm -T core python -m city_core baseline` — точный базовый Score.
 - `docker compose run --rm -T core python -m city_core demo` — пример из кейса за 95.
 - `docker compose run --rm -T core python -m city_core evaluate < core/tests/fixtures/over_budget.json` — ожидаемый отказ с exit 2.
+
+## API и AI
+- FastAPI 0.141.1, Pydantic 2.13.5, Uvicorn 0.53.0, HTTPX 0.28.1 — server/requirements.in, полный lock requirements.txt.
+- pydantic-settings — server/requirements.in.
+- OpenAI Chat Completions со structured outputs, модель из OPENAI_MODEL (пример gpt-4.1-mini). Без ключа возвращается unavailable.
+- Проверено: make api-check (22 теста, Ruff, mypy), make up, GET /api/health, /api/catalog, POST evaluate/analyze на localhost:8020.
+- Живые AI-ответы не проверены: пользователь ещё добавляет ключ.
