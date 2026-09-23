@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useSimulator } from "../features/simulator/useSimulator";
+import { ScenarioPanel } from "../features/simulator/ScenarioPanel";
+import { number, delta } from "../features/simulator/ResultsPanel";
 import { LANDMARKS } from "../features/map/mapConfig";
 import { useCityMap } from "../features/map/useCityMap";
 import { Icon } from "../shared/ui/Icon";
@@ -6,6 +9,7 @@ import styles from "./MapPage.module.css";
 
 export default function MapPage() {
   const map = useCityMap();
+  const sim = useSimulator();
   const [showHelp, setShowHelp] = useState(false);
   const ready = map.status === "ready";
   return (
@@ -17,12 +21,12 @@ export default function MapPage() {
           </span>
           <span>
             astana<span className={styles.brandDot}>.</span>
-            <small>ГОРОД С ВЫСОТЫ</small>
+            <small>CITY DECISION LAB</small>
           </span>
         </a>
         <div className={styles.breadcrumb}>
           Казахстан <span>/</span> Астана <span>/</span>{" "}
-          <strong>Обзор города</strong>
+          <strong>Симулятор развития</strong>
         </div>
         <button
           className={styles.helpButton}
@@ -35,98 +39,8 @@ export default function MapPage() {
         </button>
       </header>
       <main className={styles.workspace}>
-        <aside className={styles.sidebar} aria-label="Обзор Астаны">
-          <div className={styles.intro}>
-            <span className={styles.eyebrow}>
-              <span /> ИССЛЕДУЙТЕ ГОРОД
-            </span>
-            <h1>
-              Астана.
-              <br />
-              <span>Новый ракурс.</span>
-            </h1>
-            <p>
-              Знакомые места, настоящие улицы
-              <br />и город в трёх измерениях.
-            </p>
-          </div>
-          <div className={styles.sectionTitle}>
-            <h2>Городские ориентиры</h2>
-            <span>04</span>
-          </div>
-          <nav className={styles.landmarks} aria-label="Городские ориентиры">
-            {LANDMARKS.map((landmark, index) => (
-              <button
-                key={landmark.id}
-                disabled={!ready}
-                onClick={() => map.flyTo(landmark)}
-                aria-pressed={map.selected?.id === landmark.id}
-                className={`${styles.landmark} ${map.selected?.id === landmark.id ? styles.selected : ""}`}
-              >
-                <span className={styles.landmarkIcon}>
-                  <Icon name={landmark.icon} size={26} />
-                </span>
-                <span className={styles.landmarkText}>
-                  <small>
-                    0{index + 1} / {landmark.category}
-                  </small>
-                  <strong>{landmark.name}</strong>
-                </span>
-                <Icon name="chevron" size={16} />
-              </button>
-            ))}
-          </nav>
-          <section className={styles.settings} aria-label="Отображение карты">
-            <div className={styles.sectionTitle}>
-              <h2>Отображение</h2>
-              <Icon name="layers" size={17} />
-            </div>
-            <button
-              className={styles.setting}
-              disabled={!ready}
-              onClick={map.toggleDimension}
-              role="switch"
-              aria-checked={map.is3d}
-            >
-              <span>
-                Объёмные здания <small>Вид с высоты</small>
-              </span>
-              <span
-                className={`${styles.switch} ${map.is3d ? styles.on : ""}`}
-              />
-            </button>
-            <button
-              className={styles.setting}
-              disabled={!ready}
-              onClick={map.toggleLabels}
-              role="switch"
-              aria-checked={map.labelsVisible}
-            >
-              <span>
-                Подписи на карте <small>Улицы и места</small>
-              </span>
-              <span
-                className={`${styles.switch} ${map.labelsVisible ? styles.on : ""}`}
-              />
-            </button>
-          </section>
-          <div className={styles.sourceNote}>
-            <span className={styles.sourceIcon}>
-              <Icon name="map" size={18} />
-            </span>
-            <div>
-              <strong>Реальная география</strong>
-              <p>
-                OpenStreetMap · OpenFreeMap
-                <br />
-                Детализация зависит от данных карты.
-              </p>
-            </div>
-          </div>
-          <div className={styles.sidebarFooter}>
-            <span>ASTANA CITY EXPLORER</span>
-            <span>01 — КАРТА</span>
-          </div>
+        <aside className={styles.simulatorSidebar}>
+          <ScenarioPanel sim={sim} />
         </aside>
         <section
           className={styles.mapRegion}
@@ -140,7 +54,26 @@ export default function MapPage() {
               <span className={styles.divider} />
               <span>{map.is3d ? "3D" : "2D"}</span>
             </div>
-            <div className={styles.mapTag}>51°07′ N &nbsp; 71°26′ E</div>
+            <select
+              className={styles.landmarkSelect}
+              aria-label="Городские ориентиры"
+              value={map.selected?.id ?? ""}
+              onChange={(event) => {
+                const landmark = LANDMARKS.find(
+                  (item) => item.id === event.target.value,
+                );
+                if (landmark) map.flyTo(landmark);
+              }}
+            >
+              <option value="" disabled>
+                Городские ориентиры
+              </option>
+              {LANDMARKS.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className={styles.tools} aria-label="Управление камерой">
             <button
@@ -210,24 +143,48 @@ export default function MapPage() {
               )}
             </div>
           )}
-          {map.selected && ready && (
-            <article className={styles.placeCard}>
-              <div className={styles.placeSymbol}>
-                <Icon name={map.selected.icon} size={32} />
+          {sim.data && (
+            <>
+              <div className={styles.cityScore}>
+                <span>
+                  {sim.result
+                    ? "РЕЗУЛЬТАТ ВАШЕЙ СТРАТЕГИИ"
+                    : "ИСХОДНОЕ СОСТОЯНИЕ ГОРОДА"}
+                </span>
+                <strong>
+                  {number(sim.result?.after.score ?? sim.data.baseline.score)}
+                  <small> / 100</small>
+                </strong>
+                <p>
+                  {sim.result
+                    ? `${delta(sim.result.score_delta)} к качеству жизни`
+                    : "Astana Quality of Life Score"}
+                </p>
               </div>
-              <div>
-                <span className={styles.eyebrow}>В ФОКУСЕ</span>
-                <h2>{map.selected.name}</h2>
-                <p>{map.selected.description}</p>
+              <div className={styles.districtDock}>
+                {sim.data.catalog.districts.map((district) => {
+                  const after = (
+                    sim.result?.after ?? sim.data?.baseline
+                  )?.districts.find((item) => item.district_id === district.id);
+                  const change = sim.result?.district_changes.find(
+                    (item) => item.district_id === district.id,
+                  );
+                  return (
+                    <article key={district.id}>
+                      <span>{district.name}</span>
+                      <strong>{number(after?.score ?? "0")}</strong>
+                      <small>
+                        {change ? delta(change.delta) : "Исходный балл"}
+                      </small>
+                      <progress max={100} value={Number(after?.score ?? 0)} />
+                    </article>
+                  );
+                })}
+                <div className={styles.syntheticNote}>
+                  УСЛОВНЫЕ РАЙОНЫ · ДАННЫЕ КЕЙСА
+                </div>
               </div>
-              <span className={styles.placeIndex}>
-                {String(
-                  LANDMARKS.findIndex(
-                    (place) => place.id === map.selected?.id,
-                  ) + 1,
-                ).padStart(2, "0")}
-              </span>
-            </article>
+            </>
           )}
           <div className={styles.cameraInfo}>
             <span className={styles.liveDot} />

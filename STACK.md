@@ -14,14 +14,17 @@
 
 ## Инфраструктура
 - Docker Compose — `docker-compose.yml`; Node 22 и Nginx 1.29 Alpine — `client/Dockerfile`.
-- Только клиент; сервер, хранилище и AI отсутствуют.
+- Preview — `docker-compose.preview.yml`: сборка FastAPI и ядра из соседнего `../alisher/`, same-origin API через Nginx.
+- Сценарии — versioned localStorage (`client/src/features/simulator/storage.ts`); БД и регистрации нет.
+- ИИ вызывается только через API: `gpt-6-sol`, Flex, ключ в окружении серверного контейнера.
 
 ## Проверенные команды
 Все команды выполняются из каталога `mansur/`.
 
 | Проверка | Команда |
 |---|---|
-| Запуск | `make up` |
+| Клиент | `make up` |
+| Демо с API из соседнего клона | `make preview` |
 | Типы | `npm --prefix client run typecheck` |
 | Линтер | `npm --prefix client run lint` |
 | Сборка | `npm --prefix client run build` |

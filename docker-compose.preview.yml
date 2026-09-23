@@ -1,0 +1,23 @@
+# Совместный просмотр из двух клонов без слияния веток в main.
+services:
+  api:
+    build:
+      context: ../alisher
+      dockerfile: server/Dockerfile
+      target: runtime
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-6-sol}
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+  client:
+    depends_on:
+      api:
+        condition: service_healthy

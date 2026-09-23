@@ -786,3 +786,225 @@
     min-height: 540px;
   }
 }
+
+.simulatorSidebar {
+  width: 410px;
+  flex-shrink: 0;
+  height: 100%;
+  min-height: 0;
+  z-index: 1;
+  border-right: 1px solid #e0e8e2;
+}
+.workspace {
+  min-height: 600px;
+}
+.landmarkSelect {
+  border: 1px solid #e0e8e2;
+  background: #fffffff2;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #5e7d71;
+  font-size: 11px;
+  max-width: 170px;
+  box-shadow: 0 3px 12px #203e4705;
+}
+.cityScore {
+  position: absolute;
+  left: 24px;
+  top: 85px;
+  padding: 18px 23px;
+  border: 1px solid #ffffffc9;
+  border-radius: 12px;
+  background: #fffffff0;
+  box-shadow: 0 6px 32px #31584313;
+  backdrop-filter: blur(14px);
+}
+.cityScore > span {
+  font-size: 8px;
+  font-weight: 650;
+  letter-spacing: 1.5px;
+  color: #819886;
+}
+.cityScore > strong {
+  display: block;
+  font-size: 47px;
+  letter-spacing: -2px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #294e42;
+}
+.cityScore small {
+  font-size: 15px;
+  color: #97aa99;
+  letter-spacing: 0;
+}
+.cityScore p {
+  margin: 0;
+  font-size: 10px;
+  color: #6d9575;
+}
+.districtDock {
+  position: absolute;
+  bottom: 58px;
+  left: 24px;
+  right: 24px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+.districtDock article {
+  padding: 14px 12px 12px;
+  background: #fffffff2;
+  border: 1px solid #ffffffbf;
+  border-radius: 10px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 7px 28px #25463013;
+}
+.districtDock article > span {
+  display: block;
+  font-size: 10px;
+  color: #748d7a;
+}
+.districtDock strong {
+  display: block;
+  font-size: 23px;
+  font-weight: 500;
+  color: #32533e;
+  margin: 6px 0;
+  letter-spacing: -0.8px;
+}
+.districtDock small {
+  display: block;
+  font-size: 9px;
+  color: #84a187;
+}
+.districtDock progress {
+  width: 100%;
+  height: 3px;
+  margin-top: 9px;
+  accent-color: #86a774;
+  border: none;
+}
+.syntheticNote {
+  grid-column: 1/-1;
+  text-align: right;
+  color: #657d63;
+  font-size: 8px;
+  letter-spacing: 1.2px;
+  padding-top: 3px;
+  text-shadow: 0 1px 4px white;
+}
+@media (max-width: 1100px) {
+  .simulatorSidebar {
+    width: 360px;
+  }
+  .districtDock {
+    left: 14px;
+    right: 14px;
+    gap: 5px;
+  }
+  .districtDock article {
+    padding: 11px 8px;
+  }
+  .districtDock strong {
+    font-size: 20px;
+  }
+  .districtDock article > span {
+    font-size: 9px;
+  }
+  .mapTop {
+    gap: 8px;
+  }
+  .landmarkSelect {
+    max-width: 130px;
+  }
+  .locationPill {
+    font-size: 10px;
+  }
+}
+@media (max-width: 800px) and (min-width: 601px) {
+  .simulatorSidebar {
+    width: 330px;
+  }
+  .districtDock {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    bottom: 50px;
+  }
+  .districtDock article:nth-child(n + 4) {
+    display: none;
+  }
+  .landmarkSelect {
+    display: none;
+  }
+  .cityScore {
+    left: 14px;
+    padding: 14px;
+  }
+  .cityScore > span {
+    font-size: 7px;
+  }
+  .cityScore > strong {
+    font-size: 35px;
+  }
+}
+@media (max-width: 600px) {
+  .workspace {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .simulatorSidebar {
+    width: 100%;
+    height: auto;
+    order: 2;
+  }
+  .mapRegion {
+    height: 470px;
+    min-height: 470px;
+    order: 1;
+    width: 100%;
+    flex: none;
+  }
+  .cityScore {
+    top: 75px;
+    left: 15px;
+    padding: 12px 15px;
+  }
+  .cityScore > strong {
+    font-size: 32px;
+  }
+  .cityScore > span {
+    font-size: 6px;
+  }
+  .cityScore p {
+    font-size: 8px;
+  }
+  .districtDock {
+    left: 12px;
+    right: 12px;
+    bottom: 45px;
+    gap: 4px;
+  }
+  .districtDock article {
+    padding: 9px 5px;
+  }
+  .districtDock article > span {
+    font-size: 8px;
+  }
+  .districtDock strong {
+    font-size: 16px;
+  }
+  .districtDock small {
+    font-size: 7px;
+  }
+  .districtDock progress {
+    margin-top: 5px;
+  }
+  .syntheticNote {
+    font-size: 6px;
+  }
+  .landmarkSelect {
+    display: none;
+  }
+}
