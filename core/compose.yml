@@ -1,0 +1,20 @@
+services:
+  core:
+    build:
+      context: .
+      target: runtime
+    read_only: true
+    tmpfs: [/tmp]
+    network_mode: none
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+  core-check:
+    profiles: [check]
+    build:
+      context: .
+      target: check
+    read_only: true
+    tmpfs: [/tmp]
+    network_mode: none
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
