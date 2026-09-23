@@ -40,7 +40,9 @@ async def explain(
     prompt = Path(__file__).with_name("prompt.md").read_text(encoding="utf-8")
     payload = {
         "model": settings.openai_model,
-        "max_completion_tokens": 1800,
+        "max_completion_tokens": 4000,
+        "service_tier": "flex",
+        "reasoning_effort": "low",
         "messages": [
             {"role": "system", "content": prompt},
             {

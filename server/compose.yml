@@ -8,7 +8,7 @@ services:
       - "127.0.0.1:${API_PORT:?Set API_PORT in .env}:8000"
     environment:
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
-      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-6-sol}
     read_only: true
     tmpfs: [/tmp]
     cap_drop: [ALL]

@@ -25,6 +25,8 @@
 ## API и AI
 - FastAPI 0.141.1, Pydantic 2.13.5, Uvicorn 0.53.0, HTTPX 0.28.1 — server/requirements.in, полный lock requirements.txt.
 - pydantic-settings — server/requirements.in.
-- OpenAI Chat Completions со structured outputs, модель из OPENAI_MODEL (пример gpt-4.1-mini). Без ключа возвращается unavailable.
+- OpenAI Chat Completions со structured outputs, модель из OPENAI_MODEL (пример gpt-6-sol). Без ключа возвращается unavailable.
 - Проверено: make api-check (22 теста, Ruff, mypy), make up, GET /api/health, /api/catalog, POST evaluate/analyze на localhost:8020.
 - Живые AI-ответы не проверены: пользователь ещё добавляет ключ.
+
+По настройке пользователя: gpt-6-sol, service_tier=flex, без перехода на Standard. Таймаут AI — 180 секунд.
